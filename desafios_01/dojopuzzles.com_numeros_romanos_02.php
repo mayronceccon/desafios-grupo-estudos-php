@@ -61,9 +61,6 @@ function getRomanNumbers($input = null)
         return 0;
     }
 
-    /**
-     * Números Romanos
-     */
     $corresponding = array(
         'I' => 1,
         'V' => 5,
@@ -108,13 +105,5 @@ function getIndoArabicNumbers($input = null)
 
     if (isset($corresponding[$input])) {
         return $corresponding[$input];
-    }
-
-    /*110
-    'CX'*/
-    foreach ($corresponding as $key => $number) {
-        if ($key <= $input) {
-            echo "aaa";
-        }
     }
 }
