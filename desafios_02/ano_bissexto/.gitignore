@@ -1,0 +1,12 @@
+logs/*
+*.log
+.phpintel/*
+.idea/*
+node_modules/*
+vendor/*
+package-lock.json
+composer.lock
+.env
+*.swp
+*.bak
+*lock.*

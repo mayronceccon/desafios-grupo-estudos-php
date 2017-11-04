@@ -1,0 +1,22 @@
+{
+    "name": "mayron/ano_bissexto",
+    "description": "Projeto Grupo de Estudos Ano Bissexto (desafio 02)",
+    "authors": [
+        {
+            "name": "Mayron Ceccon",
+            "email": "mayron.ceccon@gmail.com"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+            "MTC\\" : "src/MTC"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "sebastian/phpcpd": "*",
+        "phpmd/phpmd": "*",
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "*"
+    }
+}
