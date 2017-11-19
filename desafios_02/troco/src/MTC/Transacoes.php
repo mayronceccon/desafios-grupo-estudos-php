@@ -2,6 +2,9 @@
 
 namespace MTC;
 
+/**
+ * Classe para trabalhar com as entradas e saidas de valores
+ */
 class Transacoes
 {
     private $valorTotal;
@@ -16,6 +19,14 @@ class Transacoes
         $this->troco = array();
     }
 
+    /**
+     * Verifica de acordo com os valores o que deve ser
+     * retornado para o cliente
+     *
+     * @param float $valorTotal
+     * @param float $valorPagamento
+     * @return void
+     */
     public function pagamento(float $valorTotal, float $valorPagamento)
     {
         $this->valorTotal = $valorTotal;
@@ -26,6 +37,11 @@ class Transacoes
         }
     }
 
+    /**
+     * Verifica se é necessário troco para o cliente
+     *
+     * @return void
+     */
     private function temTroco()
     {
         $this->diferenca = $this->valorPagamento - $this->valorTotal;
@@ -35,6 +51,11 @@ class Transacoes
         return false;
     }
 
+    /**
+     * De acordo com o valor faz o cálculo do troco necessário
+     *
+     * @return void
+     */
     private function retornaTroco()
     {
         $this->trocoCedulas();
@@ -42,6 +63,11 @@ class Transacoes
         return $this->troco;
     }
 
+    /**
+     * Cálculo de cedúlas que devem ser entregues
+     *
+     * @return void
+     */
     private function trocoCedulas()
     {
         $cedulas = new \MTC\Moedas\Cedulas($this->tipoMoeda);
@@ -52,6 +78,11 @@ class Transacoes
         $this->valoresTroco($retornoCedulas);
     }
 
+    /**
+     * Cálculo de moedas que devem ser entregues
+     *
+     * @return void
+     */
     private function trocoMoedas()
     {
         $moedas = new \MTC\Moedas\Moedas($this->tipoMoeda);
@@ -62,23 +93,58 @@ class Transacoes
         $this->valoresTroco($retornoMoedas);
     }
 
-    private function valoresTroco($valores)
+    /**
+     * Percorre todas as cédulas/moedas possíveis para o troco
+     *
+     * @param array $valores
+     * @return void
+     */
+    private function valoresTroco(array $valores)
     {
-        array_walk_recursive($valores, function ($item) use ($valores) {
-            $this->diferenca = $this->arredondaValor($this->diferenca);
-
-            if ($this->diferenca >= $item) {
-                array_push($this->troco, $item);
-                $this->diferenca -= $item;
-
-                if ($this->diferenca >= $item) {
-                    $this->valoresTroco($valores);
-                }
-            }
+        array_walk_recursive($valores, function ($valor) use ($valores) {
+            $this->buscaCedulasMoedasTroco($valor, $valores);
         });
     }
 
-    private function arredondaValor($valor)
+    /**
+     * Cédulas/moedas que serão retornadas no troco
+     *
+     * @param float $valor
+     * @param array $valores
+     * @return void
+     */
+    private function buscaCedulasMoedasTroco(float $valor, array $valores)
+    {
+        $this->diferenca = $this->arredondaValor($this->diferenca);
+        if ($this->diferenca >= $valor) {
+            array_push($this->troco, $valor);
+            $this->diferenca -= $valor;
+
+            $this->mesmasCedulasMoedas($valor, $valores);
+        }
+    }
+
+    /**
+     * Busca novamente cédulas/moedas que podem ser iguais
+     *
+     * @param float $valor
+     * @param array $valores
+     * @return void
+     */
+    private function mesmasCedulasMoedas(float $valor, array $valores)
+    {
+        if ($this->diferenca >= $valor) {
+            $this->valoresTroco($valores);
+        }
+    }
+
+    /**
+     * Arredonda valor para duas casas
+     *
+     * @param float $valor
+     * @return void
+     */
+    private function arredondaValor(float $valor)
     {
         return round($valor, 2);
     }
