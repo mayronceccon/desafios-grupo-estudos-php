@@ -1,6 +1,6 @@
 <?php
 
-namespace MTC\Moedas\Tipos\Real;
+namespace MTC\Moedas\Tipos\Euros;
 
 use MTC\Moedas\Tipos\Interfaces\IMoedas;
 

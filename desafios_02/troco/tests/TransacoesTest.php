@@ -86,4 +86,16 @@ class TransacoesTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($esperado, $resultado);
     }
+
+    public function testPagamentosEuros1()
+    {
+        $esperado = array(
+            500.00
+        );
+
+        $transacoes = new \MTC\Transacoes(new \MTC\Moedas\Tipos\Euros\Euros);
+        $resultado = $transacoes->pagamento(500.00, 1000.00);
+
+        $this->assertEquals($esperado, $resultado);
+    }
 }
