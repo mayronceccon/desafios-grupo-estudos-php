@@ -1,0 +1,14 @@
+<phpunit
+        colors="true"
+        verbose="true"
+        bootstrap="tests/bootstrap.php">
+
+    <testsuite name="App Test Suite">
+        <directory>tests</directory>
+    </testsuite>
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
